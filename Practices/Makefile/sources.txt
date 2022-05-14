@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=8KyZedtkEhk&ab_channel=KrisJordan
+
+https://www.youtube.com/watch?v=_r7i5X0rXJk&ab_channel=PaulProgramming
+
+https://www.youtube.com/watch?v=DtGrdB8wQ_8&ab_channel=GabrielParmer
+
+https://github.com/gwu-cs-os/evening_os_hour/blob/master/f19/10.2-makefiles/02_simple_makefile/Makefile
