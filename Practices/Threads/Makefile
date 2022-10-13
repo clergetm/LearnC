@@ -33,7 +33,7 @@ CC=gcc
 CFLAGS=-Wall -g -O2
 LDLIBS=-lpthread
 
-all: parking
+all: parking parkingVIP
 
 clean:
 	$(RM) *.o
