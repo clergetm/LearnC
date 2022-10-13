@@ -37,7 +37,7 @@ int main (int argc, char *argv[]) {
     {
         for (size_t y = 0; y < 2; y++)
         {
-            printf("value test[%d][%d]=[%d]\n",x,y,test[x][y]);
+            printf("value test[%zu][%zu]=[%d]\n",x,y,test[x][y]);
         }     
     }
     
