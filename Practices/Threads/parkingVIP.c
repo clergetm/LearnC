@@ -59,6 +59,24 @@ void * sortir_parking(void *arg){
     return;
 }
 
+
+void * sortir_VIP(void *arg){
+    synchro_t * st = (synchro_t *)arg;
+    pthread_mutex_lock(&(st->mutex));
+    pthread_t tid = pthread_self();
+        printf("-VIP-Thread : %x - Sortir parking\n",(unsigned int) tid);
+
+        st->nb_libre++;
+        if(st->nb_VIP_attente){
+            printf("-VIP-Thread : %x - Signal\n",(unsigned int) tid);
+            pthread_cond_signal(&(st->condition_VIP));
+        }
+    
+    pthread_mutex_unlock(&(st->mutex));
+
+    return;
+}
+
 void * voiture(void *arg){
     entrer_parking(arg);
     pthread_t tid = pthread_self();
@@ -75,7 +93,7 @@ void * voiture_VIP(void *arg){
     srand((int) tid);
 
     usleep(rand()/ RAND_MAX * 1000000000000000000000000000);
-    sortir_parking(arg);
+    sortir_VIP(arg);
     return;
 }
 
@@ -91,11 +109,14 @@ int main(int argc,char **argv){
     pthread_t* tids[NB_VOITURE];
 
     // 100 places libres pour 110 voitures (100 normales | 10 VIP)
-    // for(int i = 0; i < NB_VIP; i++){
-    //     pthread_create(&tids[i],NULL,voiture_VIP,&MY_PARKING);
-    // }
-        for(int i = 0; i < NB_VOITURE; i++){
-        pthread_create(&tids[i],NULL,voiture,&MY_PARKING);
+    /* for(int i = 0; i < NB_VIP; i++){
+        pthread_create(&tids[i],NULL,voiture_VIP,&MY_PARKING);
+    } */
+    for(int i = 0; i < NB_VOITURE; i++){
+        if(i % 10 == 0)
+            pthread_create(&tids[i],NULL,voiture_VIP,&MY_PARKING);
+        else
+            pthread_create(&tids[i],NULL,voiture,&MY_PARKING);
     }
 
     for(int j = 0; j < NB_VOITURE; j++){

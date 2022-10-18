@@ -13,9 +13,8 @@ typedef struct synchro_s {
 
 void * entrer_parking(void *arg){
     synchro_t * st = (synchro_t *)arg;
-    pthread_t tid = pthread_self();
     pthread_mutex_lock(&(st->mutex));
-        printf("Thread : %x - Entrer parking\n",(unsigned int) tid);
+        printf("Thread : %x - Entrer parking\n",(unsigned int) pthread_self());
         while(st->nb_libre == 0)
             pthread_cond_wait(&(st->mutex),&(st->condition));
         
@@ -28,8 +27,7 @@ void * entrer_parking(void *arg){
 void * sortin_parking(void *arg){
     synchro_t * st = (synchro_t *)arg;
     pthread_mutex_lock(&(st->mutex));
-    pthread_t tid = pthread_self();
-        printf("Thread : %x - Sortir parking\n",(unsigned int) tid);
+        printf("Thread : %x - Sortir parking\n",(unsigned int) pthread_self());
 
         st->nb_libre++;
         pthread_cond_signal(&(st->condition));
@@ -44,7 +42,7 @@ void * voiture(void *arg){
     pthread_t tid = pthread_self();
     srand((int) tid);
 
-    usleep(rand()/ RAND_MAX * 10000);
+    usleep(RAND_MAX * 10000000000000000000000000000 * 100000000000000000000000000000 * 10000000000000000000000);
     sortin_parking(arg);
     return;
 }
